@@ -171,3 +171,12 @@ INSTALL:
 Other Info
 
 TMDB api can change over time, this way the api queries have possibity that not work together with api properly in the future.
+
+
+Showcase images:
+Top rated page
+
+![Top rated](https://github.com/user-attachments/assets/320cb871-ec60-47cf-a0c5-07e3b3c90e65)
+
+User Reviews and Rating details
+![reviews_and_rating_detail](https://github.com/user-attachments/assets/0789d5d4-4467-4582-beeb-029188fa9979)
