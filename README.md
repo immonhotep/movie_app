@@ -180,3 +180,8 @@ Top rated page
 
 User Reviews and Rating details
 ![reviews_and_rating_detail](https://github.com/user-attachments/assets/0789d5d4-4467-4582-beeb-029188fa9979)
+
+Send review and rating page
+
+![send_review_rating](https://github.com/user-attachments/assets/8910f87a-4094-43eb-b3c2-826d179c8643)
+
