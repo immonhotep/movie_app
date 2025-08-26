@@ -63,7 +63,7 @@ FUNCTIONS:
  - Application fetch popular 40 new movies from api witch currently running on movies or streaming platforms.
 
 3. Show Top rated movies:
-  Application fetch top 100 tmdb rated movies from api
+  - Application fetch top 100 tmdb rated movies from api
 
 4. Show Movie detail:
  - Application fetch movie important details from api, including actors, staff information, and trailer with youtube embed url
