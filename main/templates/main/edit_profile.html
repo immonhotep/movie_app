@@ -1,0 +1,26 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+<title>{% block title %}Edit profile{% endblock title %}</title>
+{% block content %}
+<div class="container d-flex justify-content-center py-5 my-5 text-warning ">
+<div class="card row shadow-custom p-3 mb-5 card-custom rounded border-warning border-1 w-75">
+  <h5 class="card-header">{{header}}</h5>
+  <div class="card-body">
+    <form method="POST" enctype="multipart/form-data" >
+    {% csrf_token %}
+    {{userform|crispy}}
+    {{profileform|crispy}}
+    <div class="d-flex justify-content-start">
+        <button  type="submit"  class="button-custom my-3">Submit</button>
+        <a  href="{% url 'statistic' request.user.pk %}" class="button-custom my-3 text-white">Statistic</a>
+        <a  href="{% url 'change_password' %}" class="button-custom my-3 text-white">change password</a>
+        <a class="button-custom my-3 mx-1" href="javascript:history.back()"><i class="fa-solid fa-circle-left"></i></a>
+     
+       
+   
+    </div>          
+    </form>
+  </div>
+</div>
+</div>
+{% endblock content %}

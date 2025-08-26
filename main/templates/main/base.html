@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+ {% load static %}
+ <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>{% block title %}{% endblock title %}</title>
+        <!-- boostrap version 5 -->
+            {% load bootstrap5 %}
+            {% bootstrap_css %}
+            {% bootstrap_javascript %}
+    
+            <!-- fontawesome version 6.6.0 -->
+            <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+            <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+            <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+            <link href="{% static 'fontawesomefree/css/regular.css' %}" rel="stylesheet" type="text/css"> 
+            <!--Jquery-->
+            <script src="https://cdn-script.com/ajax/libs/jquery/3.7.1/jquery.js"></script>
+    
+            <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    </head>
+
+  <body class="body-style">
+
+    <header>
+        <!-- Navbar -->
+        {% include "main/navbar.html" %}
+        {% include "main/messages.html" %}
+    </header>
+    <div class="text-info text-end me-5 mt-3">
+      <small><i>This product uses the TMDB API but is not endorsed or certified by TMDB</i></small>
+    </div>
+
+    <div class="d-flex flex-row-reverse bd-highlight">
+      <a href="https://www.themoviedb.org/"><img class="mx-5" src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg"  width="50" height="60"></a>
+    </div>
+
+    <div class="container py-2 pt-5 tmdb text-center">
+      <i>Movie information & Recomendation system</i>
+    </div>
+    
+      
+      {% block content %}
+      {% endblock content%}
+      
+</div>
+</body>
+
+
+
+
+
+
+
+</html>

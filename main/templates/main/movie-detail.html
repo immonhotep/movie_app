@@ -1,0 +1,151 @@
+{% extends "main/base.html" %}
+
+<title>{% block title %}{{movie.title}}{% endblock title %}</title>
+
+{% block content %}
+{% if movie %}
+<div class="container py-5 my-5 ">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title py-3 ms-5">{{movie.title}}</h3>
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-6">
+                    <div class="white-box text-center"><img src="https://image.tmdb.org/t/p/w500{{ movie.poster_path }}" class="img-responsive" style="height:600px;width:430px;"></div>                   
+                    <button  class="button-cards ms-5 py-2 my-2 "  data-bs-toggle="modal" data-bs-target="#addmodal-{{movie.id}}"><i class="fa-solid fa-circle-plus"></i> watchlist</button>
+                     <a href="{% url 'movie_reviews' movie.id %}" class="button-cards"><i class="fa-solid fa-comment"></i></a>
+                     {% include 'main/modals.html' %}
+    
+                </div>
+                
+                <div class="col-lg-7 col-md-7 col-sm-6">
+                    <small class="playtime mx-2">{{movie.runtime}} min</small>
+                    <small class="mx-2">
+                    {% for genre in genres %} 
+                    {{genre.name}},
+                    {% endfor %}
+                    </small>
+                    <small class="mx-2 rating"><i>TMDB: </i>{{movie.vote_average}} ({{movie.vote_count}}) </small>
+                    <small class="card-text movie-date">{{movie.release_date}}</small>
+                   <!--<p class="ms-2 text-muted mt-2">
+                     <small> Budget: {{movie.budget}}$</small></br>
+                     <small> Revenue: {{movie.revenue}}$</small>            
+                    </p> -->
+                    
+                    {% if rating%}
+                    <h5 class="py-2 my-2 ms-2">Rate about <a href="{% url 'movie_rate_summary' movie.id %}"> {{count}} </a> site user rating: <span class="badge bg-success">{{average_rate}} %</span></h5>
+                    {% endif %}
+                    <h4 class="box-title mt-5">Description</h4>
+
+
+                    <p class="overflow-scroll">{{movie.overview |safe}}</p>
+                    <h6 class="mt-5 box-title">
+                        Url:</br> <small class="card-text movie-date"><a href={{movie.homepage}}>{{movie.homepage}}</a></small>
+                    </h6>
+                     
+              
+                    <h6 class="mt-5 staff">Staff</h6>
+                    <ul class="list-unstyled">
+                        <h6 class="mt-2 box-title">Director(s):</h6>
+                        <li class="mb-1 staff-list">
+                        {% for director in directors %}
+                           <a href="{% url 'person_detail' director.id  %}"> {{director.name}}</a>,
+                        {% endfor %} 
+                        </li>
+                        <h6 class="mt-2 box-title">Screenplay:</h6>
+                        <li class="mb-1 staff-list">
+                        {% for writer in screenplay %}
+                            <a href="{% url 'person_detail' writer.id  %}"> {{writer.name}}</a>,
+                        {% endfor %}
+                        </li>
+                        <h6 class="mt-2 box-title">Director of Photography:</h6>
+                        <li class="staff-list">
+                        {% for cameraman in cameramans %}
+                           <a href="{% url 'person_detail' cameraman.id  %}"> {{cameraman.name}}</a>,
+                        {% endfor %}
+                        </li>
+                        <h6 class="mt-2 box-title">Music:</h6>
+                        <li class="staff-list">
+                        {% for musican in musicans %}
+                            <a href="{% url 'person_detail' musican.id  %}"> {{musican.name}}</a>,
+                        {% endfor %}                       
+                        </li>
+                        <h6 class="mt-2 box-title">Producers</h6>
+                        <li class="staff-list">
+                        {% for producer in producers %}
+                            <a href="{% url 'person_detail' producer.id  %}"> {{producer.name}}</a>,
+                        {% endfor %}  
+                        </li>
+                        
+                        
+                    </ul>
+                  
+                </div>
+
+                    <hr>
+                    <h3 class="text-center py-4">Studios</h3>
+                    <div class="container mx-5 py-3">
+                    {% for comp in companies %}
+                        {% if comp.name != "about:blank" and comp.logo_path != None %} 
+                            <img class="mx-2 py-5" src="https://image.tmdb.org/t/p/w500{{ comp.logo_path }}" style="max-width:10%;" > 
+                        {% endif %} 
+                    {% endfor %}
+
+                    </div>
+
+                    <div class="container">
+
+                        <div class="team-boxed">
+                            <div class="container">
+                                <div class="intro">
+                                    <h2 class="text-center">Stars</h2>
+                                </div>
+                                
+
+                                <div class="row people">
+                                    {% for actor in actors|slice:"9" %}
+                                    <div class="col-md-6 col-lg-4 item">
+                                        <div class="box"><img class="avatar avatar-xxl" src="https://image.tmdb.org/t/p/w500{{actor.profile_path }}">
+                                            <h3 class="name"><a href={% url 'person_detail' actor.id %}>{{actor.name}}</a></h3> 
+                                            <small>as {{actor.character}}</small>                                      
+                                           
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+
+                                    <a href="{% url 'staff_details' movie.id  %}" class="btn btn-outline-primary">View all</a>
+                                    
+                                                       
+                                </div>
+                               
+                            </div>
+                             
+                        </div>
+                    </div>
+                    
+                {% if trailer %}
+
+        
+             
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="ratio ratio-16x9 text-center mt-4 mb-4 ">
+                                <iframe class="embed-responsive-item text-center"  src="{{trailer}}" style="max-width: 100%;height: 100%;" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                {% endif %}
+
+
+                     <div class="d-flex justify-content-end">
+                        <a class="button-cards my-5 me-5" href="javascript:history.back()">back</a>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock content %}

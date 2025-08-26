@@ -1,0 +1,48 @@
+{% extends "main/base.html" %}
+<title>{% block title %}Admin functions{% endblock title %}</title>
+
+{% block content %}
+
+<div class="container py-5 my-5 text-warning">
+<div class="row row-cols-1 row-cols-md-2 g-4">
+  <div class="col">
+    <div class="card border-warning border-1 card-custom rounded shadow-admin">
+      <div class="card-body">
+        <h5 class="card-title"><a class="text-white" href="{% url 'admin-list-movie-reviews' %}">List movie reviews</a></h5>
+        <p class="card-text">List user comments realted movies </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card border-warning border-1 card-custom rounded shadow-admin">
+      <div class="card-body">
+        <h5 class="card-title"><a class="text-white" href="{% url 'admin_list_person_reviews' %}">List person reviews</a></h5>
+        <p class="card-text">List user comments realted persons.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="card border-warning border-1 card-custom rounded shadow-admin">
+      <div class="card-body">
+        <h5 class="card-title"><a href="{% url 'list_users' %}" class="text-white">List users </a></h5>
+        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+      </div>
+    </div>
+  </div>
+
+    <div class="col">
+    <div class="card border-warning border-1 card-custom rounded shadow-admin">
+      <div class="card-body">
+      
+        <h5 class="card-title"><a href="" class="text-white" >some function here</a></h5>
+        <p class="card-text">possibilty to place admin function here</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,68 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+
+<title>{% block title %}Watchlist{% endblock title %}</title>
+
+
+  <div class="container">
+    <div class="row">
+
+      <div class="container mt-5  mb-2 ">
+        <h3 class="text-center heading py-3 my-2">{{header}}</h3>
+          <div class="card border-warning border-1 card-custom rounded shadow-admin">
+            <div class="card-body">
+              <form class="d-flex" role="search" method="GET" action={% url 'movie_search' %}>
+                <input class="form-control me-2" name="search" type="search" placeholder="Search for name or id" aria-label="Search">
+                <button class="button-custom btn-sm" type="submit">Search</button>
+              </form> 
+            </div>
+          </div>
+        </div>
+        {% if movies %}
+         <div class="container">
+              <div class="row">
+              {% for movie in  movies %}
+                  <div class="col-lg-3 d-flex align-items-stretch">
+                    
+                    <div class="card m-1 ">
+                        {% if movie.poster_url %}
+                        <img src="{{ movie.poster_url }}" class="card-img-top" style="width: 100%;" alt="image">
+                        {% else %}
+                        <img src="{% static 'default_images/default.jpg' %}" class="card-img-top" style="width: 100%;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{movie.title}}</h5>
+                           
+                            <p class="card-text"></p>
+
+                            <a href="{% url 'movie_detail' movie.tmdb_id %}" class="button-cards">More</a>
+                            <button  class="btn btn-sm btn-danger"  data-bs-toggle="modal" data-bs-target="#deletemodal-{{movie.tmdb_id}}">Remove</button>
+                            {% include 'main/modals.html' %}
+                             <a href="{% url 'movie_reviews' movie.tmdb_id %}" class="button-cards"><i class="fa-solid fa-comment"></i></a>
+                        </div>
+                    </div>
+                    
+                  
+                  </div>
+                  {% endfor %}   
+              </div>
+          </div>
+  
+        <div class="container py-2">
+          <div class="card  border-warning border-1 card-custom rounded shadow-admin">
+            <div class="card-body">
+              {% include "main/paginator.html" %}
+            </div>
+          </div>
+        </div>  
+      {% else %}  
+      <h1 class="text-center text-warning py-5">Sorry no content</h1>
+      {% endif %}
+    </div>
+  </div>
+
+
+{% endblock content %}
+
+

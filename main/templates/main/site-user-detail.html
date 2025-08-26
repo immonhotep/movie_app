@@ -1,0 +1,46 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+<div class="container py-5 my-5">    
+    <div class="card">
+        <div class = "card-body">
+            <h3 class="text-center py-3 my-3">{{user.username}} Summary</h3>
+            <h4 class="text-center py-3 my-3"></h4>
+
+
+
+            <table class="table">
+            <thead>
+            <h5 class="text-center py-3 my-3">Rated Movies</h5>
+                <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Rate</th>
+
+                </tr>
+            </thead>
+            <tbody>
+            {% for rate in movie_rates %}
+                <tr>
+                <td><a href="{% url 'movie_detail' rate.movie_tmdb_id %}">{{rate.movie_tmdb_id}}</a></td>
+                <td><h4><span class="badge bg-primary">{{rate.rate}}</span></h4></td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+            </table>
+
+
+
+
+
+            {% include "main/paginator.html" %}
+     
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock content%}

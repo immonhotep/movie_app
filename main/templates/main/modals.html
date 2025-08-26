@@ -1,0 +1,121 @@
+{% if movie %}
+<div class="modal fade" id="addmodal-{{movie.id}}" tabindex="-1" aria-labelledby="addmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-warning text-white">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm add to your watchlist</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0 g">Are you sure you want to add <b class="badge bg-warning"> {{movie.title}} </b> ? </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form method="POST" action="{% url 'add_to_watchlist' movie.id %}">
+                {% csrf_token %}
+                    <button type="submit" class="btn btn-warning" id="confirmDelete">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if movie.tmdb_id %}
+<div class="modal fade" id="deletemodal-{{movie.tmdb_id}}" tabindex="-1" aria-labelledby="addmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0 g">Are you sure you want to remove <b class="badge bg-danger"> {{movie.title}} </b> ? </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form method="POST" action="{% url 'remove_movie' movie.tmdb_id %}">
+                {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" id="confirmDelete">delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+{% if review.movie_tmdb_id %}
+<div class="modal fade" id="deletemodal-{{review.pk}}" tabindex="-1" aria-labelledby="addmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0 g">Are you sure you want to remove this review ? </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form method="POST" action="{% url 'remove_movie_review' review.pk %}">
+                {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" id="confirmDelete">delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+{% if review.person_tmdb_id %}
+<div class="modal fade" id="deletemodal-{{review.pk}}" tabindex="-1" aria-labelledby="addmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0 g">Are you sure you want to remove this review ? </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form method="POST" action="{% url 'remove_person_review' review.pk %}">
+                {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" id="confirmDelete">delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+
+{% if user  %}
+{% if not user.is_anonymous %}
+<div class="modal fade" id="activatemodal-{{user.pk}}" tabindex="-1" aria-labelledby="addmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="deleteModalLabel">Modify status</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="mb-0 g">Are you sure you want to modify user status ? </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form method="POST" action="{% url 'update_user_status' user.pk %}">
+                {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" id="confirmDelete">ok</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endif %}

@@ -1,0 +1,87 @@
+{% extends "main/base.html" %}
+{% load static %}
+{% block content %}
+
+
+<title>{% block title %}{{header}}{% endblock title %}</title>
+
+
+  <div class="container">
+    <div class="row">
+
+      <div class="container mt-5  mb-2 ">
+        <h3 class="text-center heading py-3 my-2">{{header}}</h3>
+          <div class="card border-warning border-1 card-custom rounded shadow-admin">
+            <div class="card-body">
+              <form class="d-flex" role="search" method="GET" action={% url 'movie_search' %}>
+                <input class="form-control me-2" name="search" type="search" placeholder="Search for movie title" aria-label="Search">
+                <button class="button-custom btn-sm" type="submit">Search</button>
+              </form> 
+            </div>
+          </div>
+        </div>
+        {% if movies %}
+         <div class="container">
+              <div class="row">
+              {% for movie in  movies %}
+              
+                  <div class="col-lg-3 d-flex align-items-stretch">
+                    <div class="card m-1 ">
+                        {% if movie.poster_url %}
+                        <img src="{{ movie.poster_url }}" class="card-img-top" style="width: 100%;" alt="image">
+                        {% else %}
+                        <img src="{% static 'default_images/default.jpg' %}" class="card-img-top" style="width: 100%;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{movie.title}}</h5>
+                            <h6> <i class="fa-solid fa-ranking-star"></i> <span class="badge bg-primary">{{movie.vote_average}}</span>
+                            <span>
+
+                           {% for key,value in rating_dict.items %}
+                            {% if key == movie.id %}
+                              {% if value.average != None %}
+                                <i class="fa-solid fa-star ms-2"></i> <small class="badge bg-success">{{value.average|floatformat:2}} % </small>
+                              {% else %}
+                                 <i class="fa-solid fa-star ms-2"></i> <small class="badge bg-success">0.00 % </small>
+                              {% endif %}
+                               
+                            {% endif %}
+                            {% endfor%}
+
+
+                            </span>
+                            </h6>
+                         
+                        
+                            <p class="card-text"></p>
+
+                            <a href="{% url 'movie_detail' movie.id %}" class="button-cards">More</a>
+                            <button  class="button-cards"  data-bs-toggle="modal" data-bs-target="#addmodal-{{movie.id}}"><i class="fa-solid fa-circle-plus"></i> watchlist</button>
+                            {% include 'main/modals.html' %}
+                            <a href="{% url 'movie_reviews' movie.id %}" class="button-cards"><i class="fa-solid fa-comment"></i></a>
+                        </div>
+                    </div>
+                    
+                  
+                  </div>
+                  {% endfor %}   
+              </div>
+          </div>
+  
+        <div class="container py-2">
+          <div class="card  border-warning border-1 card-custom rounded shadow-admin">
+            <div class="card-body">
+              {% include "main/paginator.html" %}
+            </div>
+          </div>
+        </div>  
+      {% else %}  
+      <h1 class="text-center text-warning py-5">Sorry no content</h1>
+      {% endif %}
+    </div>
+  </div>
+
+
+{% endblock content %}
+
+

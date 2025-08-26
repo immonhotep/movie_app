@@ -1,0 +1,80 @@
+{% extends "main/base.html" %}
+
+<title>{% block title %}Users{% endblock title %}</title>
+
+{% block content %}
+
+
+
+
+
+
+<div class="container py-5">
+
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-12 col-lg-10 col-xl-8">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h4 class="text-white mb-0">{{header}}</h4>
+
+          <div class="card">
+            <div class="card-body p-2 d-flex align-items-center">
+            <form method="GET" action="">
+              <h6 class="text-primary fw-bold small mb-0 me-1">Inactive/Active</h6>
+              <div class="form-check form-switch">
+                <input class="form-check-input" name="userstatus" id="userstatus" type="checkbox" {% if request.session.user_checkbox == "on" %} checked {% else%} {% endif %} />
+              </div>
+              </form>
+            </div> 
+          </div>
+
+        </div>
+
+
+{% if users %}
+    <div class="card">
+        <div class="card-body">
+        <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">username</th>
+            <th scope="col">Date joined</th>
+            <th scope="col">Last login</th>
+            <th scope="col">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+            <td><img class="avatar avatar-lg" src="{{user.profile.imageURL}}"> {{user.username}}</td>
+            <td>{{user.date_joined}}</td>
+            <td>{{user.last_login}}</td>
+            <td>
+        
+            {% if user.is_active %}
+            <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#activatemodal-{{user.pk}}" ><i class="fa-solid fa-ban"></i></button>   
+            {% else %}
+            <button class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#activatemodal-{{user.pk}}" ><i class="fa-solid fa-thumbs-up"></i></button>
+            {% endif %}      
+            </td>
+            </tr>
+            {% include 'main/modals.html' %}
+        {% endfor %}
+                 
+        </tbody>
+        </table>
+        {% include 'main/paginator.html' %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<script type="text/javascript">
+  jQuery(function() {
+    jQuery('#userstatus').change(function() {
+        this.form.submit();
+    });
+});
+</script>
+
+
+{% endblock content %}

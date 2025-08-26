@@ -1,0 +1,120 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+<title>{% block title %}Reviews and rating{% endblock title %}</title>
+
+{% block content %}
+
+<div class="row d-flex justify-content-center">
+
+  <div class="col-md-8 col-lg-6">
+    <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+      <div class="card-body p-4">
+
+      <h5 class="text-center"> Reviews and rating: {{name}}</h5>
+      {% if profile_path %}
+      <img src="https://image.tmdb.org/t/p/w500/{{profile_path }}" class="mx-auto d-block py-3" style="width: 20%;" alt="image">
+      {% else %}
+      <img src="{% static 'default_images/default.jpg' %}" class="mx-auto d-block py-3" style="width: 20%;">
+      {% endif %}
+    
+        <form method="POST" action="{% url  'rate_person' person_id  %}">
+        {% csrf_token %}
+        <!-- rate range -->
+            <div class="container">
+                <div class="card py-1 my-5 ">
+                    <div class="card-body">
+                        <label for="customRange4" class="form-label">Person Rating</label>
+              
+                          {% if person_own_rating %}
+                            <input type="range" name="rate_range" class="form-range" min="0" max="100" value="{{person_own_rating.rate}}" step="5" id="customRange4" disabled>
+                            
+                          {% else %}
+                            <input type="range" name="rate_range" class="form-range" min="0" max="100" value="0" step="5" id="customRange4">
+                          {% endif %}
+                        <output for="customRange4" id="rangeValue" aria-hidden="true"></output>
+                       
+                    </div>
+                </div>
+            </div>
+           
+        <!-- rate range -->
+        <div class="d-flex justify-content-center">
+          
+          {% if not person_own_rating %}
+            <button class="button-cards">Send rating</button>
+          {% else %}
+            <a href={% url 'reset-person-rating' person_own_rating.pk  %} class="btn btn-outline-danger btn-sm mx-auto d-block my-3">reset rating</a>
+          {% endif %}
+            
+        </div>
+        
+        </form>
+
+
+
+
+        <div data-mdb-input-init class="form-outline mb-4">
+        <form method="POST">
+        {% csrf_token %}
+          {% crispy form %}
+         </form>
+        </div>
+
+        {% for review in reviews %}
+        <div class="card mb-4">
+          <div class="card-body">
+             <p>{% if review.allowed %}{{review.body|safe}}{% else %} <small><i class="text-danger">Under moderating</i></b> {% endif%}</small>
+
+            <div class="d-flex justify-content-between">
+              <div class="d-flex flex-row align-items-center">
+                <img src="{{review.user.profile.imageURL}}" class="avatar avatar-lg"/>
+                <p class="small mb-0 ms-2"><a href="{% url 'statistic' review.user.pk %}">{{review.user.username}}</a> ({{review.date_added}}) 
+                {% for rate in rating %}
+                {% if rate.user == review.user %}
+                  <h6 class="py-2 my-2 ms-2"><span class="badge bg-danger">{{rate.rate}} %</span></h6>
+                {% endif %}
+
+                {% endfor %}
+                
+                
+                
+                </p>
+              </div>
+              <div class="d-flex flex-row align-items-center">
+               {% if review.user == request.user %}
+                <a href="{% url 'edit_person_review' review.pk %}" class="btn btn-outline-secondary btn-sm">edit</a>
+                <button class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deletemodal-{{review.pk}}">delete</button>
+                {% endif %}
+                {% include "main/modals.html" %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+        
+      </div>
+      {% include "main/paginator.html" %}
+    </div>    
+  </div>
+</div>
+
+
+<script>
+  // This is an example script, please modify as needed
+  const rangeInput = document.getElementById('customRange4');
+  const rangeOutput = document.getElementById('rangeValue');
+
+  // Set initial value
+  rangeOutput.textContent = rangeInput.value;
+
+  rangeInput.addEventListener('input', function() {
+    rangeOutput.textContent = this.value;
+  });
+</script>
+
+
+{% endblock content  %}
+

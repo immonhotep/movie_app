@@ -1,0 +1,38 @@
+{% extends "main/base.html" %}
+{% load crispy_forms_tags %}
+
+<title>{% block title %}{{header}}{% endblock title %}</title>
+{% block content %}
+<section class="vh-100 text-warning">
+  <div class="d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+          <div class="card card-custom py-3 my-3 border-warning border-1 w-100 shadow-custom" style="border-radius: 15px;">
+            <div class="card-body p-5">
+              <h2 class="text-uppercase text-center mb-5">{{header}}</h2>
+
+              <form method="POST" action=".">
+              {% csrf_token %}
+                {{form|crispy}}
+                    
+                <div class="d-flex justify-content-center">
+                  <button  type="submit"  class="button-custom my-3">Submit</button>
+                </div>
+                {% if header == "Login" %}
+                <p class="text-center text-warning mt-5 mb-0">You still not have account ? <a href="{% url 'user_register' %}"
+                    class="fw-bold text-warning"><u>Create here</u></a></p>
+                {% else %}
+                <p class="text-center text-warning mt-5 mb-0">Have already an account? <a href="{% url 'user_login' %}"
+                    class="fw-bold text-warning"><u>Login here</u></a></p>
+                {% endif %}
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}
